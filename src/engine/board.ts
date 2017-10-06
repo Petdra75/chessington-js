@@ -16,13 +16,18 @@ export default class Board {
         this.board[square.row][square.col] = piece;
     }
 
-    public getPiece(square: Square) {
+    public getPiece(square: Square) : Piece | undefined {
         return this.board[square.row][square.col];
     }
+
     public checkSquareInBounds(square: Square) {
         return square.col < GameSettings.BOARD_SIZE && square.col >= 0 && square.row >= 0 && square.row < GameSettings.BOARD_SIZE  
     }
-        
+    
+    public checkIfSquareBlocked(square: Square) {
+        return !(this.getPiece(square) === undefined)
+    }
+    
     public findPiece(pieceToFind: Piece) {
         for (let row = 0; row < this.board.length; row++) {
             for (let col = 0; col < this.board[row].length; col++) {

@@ -28,8 +28,11 @@ export default class Pawn extends Piece {
             
             const availableMoveSquare = new Square(pawnSquare.row + i * this.getMoveDirection(), pawnSquare.col)
             
-            if (board.checkSquareInBounds(availableMoveSquare)){
+            if (board.checkSquareInBounds(availableMoveSquare) && !board.checkIfSquareBlocked(availableMoveSquare)){
                 forwardMoves.push(availableMoveSquare)
+            }
+            else {
+                break;
             }
         }
 
