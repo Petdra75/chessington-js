@@ -3,6 +3,7 @@ import Player from '../player';
 import Board from '../board';
 import Square from '../square';
 import GameSettings from '../gameSettings';
+import { Direction } from '../direction';
 
 const QUEEN_MAX_TRAVEL_DISTANCE = GameSettings.BOARD_SIZE - 1
 
@@ -14,56 +15,24 @@ export default class Queen extends Piece {
     public getAvailableMoves(board: Board) {
         const qweenSquare : Square = board.findPiece(this)
         
-        const leftSideMoves : Square[] = new Array();
-        const rightSideMoves : Square[] = new Array()
-        const upwardMoves : Square[] = new Array()
-        const downwardMoves : Square[] = new Array();
+        const leftSideMoves : Square[] =  this.getPossibleMoveInDirection(board, QUEEN_MAX_TRAVEL_DISTANCE, Direction.Left);
+        const rightSideMoves : Square[] = this.getPossibleMoveInDirection(board, QUEEN_MAX_TRAVEL_DISTANCE, Direction.Right);
+        const upwardMoves : Square[] = this.getPossibleMoveInDirection(board, QUEEN_MAX_TRAVEL_DISTANCE, Direction.Up);
+        const downwardMoves : Square[] = this.getPossibleMoveInDirection(board, QUEEN_MAX_TRAVEL_DISTANCE, Direction.Down);
 
-        const principalDiagonal : Square[] = new Array();
-        const secondaryDiagonal : Square[] = new Array();
+ 
+        const principalDiagonal : Square[] = this.getPossibleMoveInDirection(board, QUEEN_MAX_TRAVEL_DISTANCE, Direction.UpRight)
+                                                .concat(this.getPossibleMoveInDirection(board, QUEEN_MAX_TRAVEL_DISTANCE, Direction.DownLeft));
 
-        for(let i=1; i <= QUEEN_MAX_TRAVEL_DISTANCE; i++){
+        const secondaryDiagonal : Square[] = this.getPossibleMoveInDirection(board, QUEEN_MAX_TRAVEL_DISTANCE, Direction.UpLeft)
+                                                .concat(this.getPossibleMoveInDirection(board, QUEEN_MAX_TRAVEL_DISTANCE, Direction.DownRight))
 
-            const leftMoveSquare = new Square(qweenSquare.row , qweenSquare.col-i)
-            const rightMoveSquare = new Square(qweenSquare.row , qweenSquare.col+i)
-            const upMoveSuqare = new Square(qweenSquare.row - i, qweenSquare.col)
-            const donwMoveSquare = new Square(qweenSquare.row + i, qweenSquare.col)    
-            
-            const upLeftMoveSquare = new Square(qweenSquare.row-i, qweenSquare.col-i)
-            const upRightMoveSquare = new Square(qweenSquare.row-i , qweenSquare.col+i)
-            const downLeftMoveSuqare = new Square(qweenSquare.row + i, qweenSquare.col-i)
-            const downRightMoveSquare = new Square(qweenSquare.row + i, qweenSquare.col+i)
-
-            if (board.checkSquareInBounds(upLeftMoveSquare)){
-                principalDiagonal.push(upLeftMoveSquare)
-            }
-            if (board.checkSquareInBounds(upRightMoveSquare)){
-                principalDiagonal.push(upRightMoveSquare)
-            }
-            if (board.checkSquareInBounds(downLeftMoveSuqare)){
-                secondaryDiagonal.push(downLeftMoveSuqare)
-            }
-            if (board.checkSquareInBounds(downRightMoveSquare)){
-                secondaryDiagonal.push(downRightMoveSquare)
-            }
-            if (board.checkSquareInBounds(leftMoveSquare)){
-                leftSideMoves.push(leftMoveSquare)
-            }
-                if (board.checkSquareInBounds(rightMoveSquare)){
-                rightSideMoves.push(rightMoveSquare)
-            }
-            if (board.checkSquareInBounds(upMoveSuqare)){
-                upwardMoves.push(upMoveSuqare)
-            }
-            if (board.checkSquareInBounds(donwMoveSquare)){
-                downwardMoves.push(donwMoveSquare)
-            }
-        }
+        
         const horisontalMoves : Square[] = leftSideMoves.concat(rightSideMoves)
-        const verticalMoves = downwardMoves.concat(upwardMoves)
-        const diagonalMoves = principalDiagonal.concat(secondaryDiagonal)
+        const verticalMoves : Square[] = downwardMoves.concat(upwardMoves)
+        const diagonalMoves : Square[] = principalDiagonal.concat(secondaryDiagonal)
 
-        const availableMoves = verticalMoves.concat(horisontalMoves).concat(diagonalMoves)       
+        const availableMoves : Square[] = verticalMoves.concat(horisontalMoves).concat(diagonalMoves)       
         return availableMoves;
     }
 }

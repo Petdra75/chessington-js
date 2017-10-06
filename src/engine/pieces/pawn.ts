@@ -2,6 +2,7 @@ import Piece from './piece';
 import Player from '../player';
 import Board from '../board';
 import Square from '../square';
+import { Direction } from '../direction';
 
 
 const FIRST_MOVE_TRAVEL_DISTANCE = 2
@@ -16,24 +17,12 @@ export default class Pawn extends Piece {
     }
 
     public getAvailableMoves(board: Board) : Square[] {
-        const forwardMoves : Square[] = new Array();
+        const squareTravelDistance : number = !this.hasMoved ? FIRST_MOVE_TRAVEL_DISTANCE : BASE_MOVE_TRAVEL_DISTANCE;   
         
-        const squareTravelDistance : number = !this.hasMoved ? FIRST_MOVE_TRAVEL_DISTANCE : BASE_MOVE_TRAVEL_DISTANCE   
+        const pawnDirection: Direction = this.player === Player.WHITE ? Direction.Down : Direction.Up;
 
-        const pawnSquare : Square = board.findPiece(this)
+        const forwardMoves : Square[] = this.getPossibleMoveInDirection(board, squareTravelDistance, pawnDirection)
         
-        for(let i = 1; i<=squareTravelDistance; i++) {
-            
-            const availableMoveSquare = new Square(pawnSquare.row + i * this.getMoveDirection(), pawnSquare.col)
-            
-            if (board.checkSquareInBounds(availableMoveSquare) && !board.checkIfSquareBlocked(availableMoveSquare)){
-                forwardMoves.push(availableMoveSquare)
-            }
-            else {
-                break;
-            }
-        }
-
         const availableMoves = forwardMoves;
         return availableMoves;
     }

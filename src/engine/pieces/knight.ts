@@ -9,7 +9,6 @@ export default class Knight extends Piece {
     public constructor(player: Player) {
         super(player);
     }
-
     public getAvailableMoves(board: Board) {
         const knightSquare : Square = board.findPiece(this)
         const availableMoves : Square[]  = new Array()
