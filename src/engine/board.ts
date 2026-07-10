@@ -19,7 +19,10 @@ export default class Board {
     public getPiece(square: Square) {
         return this.board[square.row][square.col];
     }
-
+    public checkSquareInBounds(square: Square) {
+        return square.col < GameSettings.BOARD_SIZE && square.col >= 0 && square.row >= 0 && square.row < GameSettings.BOARD_SIZE  
+    }
+        
     public findPiece(pieceToFind: Piece) {
         for (let row = 0; row < this.board.length; row++) {
             for (let col = 0; col < this.board[row].length; col++) {
