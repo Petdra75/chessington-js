@@ -19,8 +19,11 @@ export default class Board {
     public getPiece(square: Square) {
         return this.board[square.row][square.col];
     }
+
     public checkSquareInBounds(square: Square) {
-        return square.col < GameSettings.BOARD_SIZE && square.col >= 0 && square.row >= 0 && square.row < GameSettings.BOARD_SIZE  
+        const columnInBounds = square.col < GameSettings.BOARD_SIZE && square.col >= 0;
+        const rowInBounds = square.row >= 0 && square.row < GameSettings.BOARD_SIZE;
+        return columnInBounds && rowInBounds;   
     }
         
     public findPiece(pieceToFind: Piece) {

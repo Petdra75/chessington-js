@@ -4,6 +4,7 @@ import Square from '../square';
 
 const WHITE_MOVE_DIRECTION = 1
 const BLACK_MOVE_DIRECTION = -1
+
 export default class Piece {
     public player: Player;
 
@@ -16,8 +17,7 @@ export default class Piece {
     }
 
     public getMoveDirection() : number {
-        const moveDirection = this.player == Player.WHITE ? WHITE_MOVE_DIRECTION : BLACK_MOVE_DIRECTION;
-        return moveDirection;
+        return this.player == Player.WHITE ? WHITE_MOVE_DIRECTION : BLACK_MOVE_DIRECTION;
     }
 
     public moveTo(board: Board, newSquare: Square) {

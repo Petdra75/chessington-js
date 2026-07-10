@@ -2,7 +2,10 @@ import Piece from './piece';
 import Player from '../player';
 import Board from '../board';
 import Square from '../square';
-const QUEEN_TRAVEL_DISTANCE = 7
+import GameSettings from '../gameSettings';
+
+const QUEEN_MAX_TRAVEL_DISTANCE = GameSettings.BOARD_SIZE - 1
+
 export default class Queen extends Piece {
     public constructor(player: Player) {
         super(player);
@@ -19,7 +22,7 @@ export default class Queen extends Piece {
         const principalDiagonal : Square[] = new Array();
         const secondaryDiagonal : Square[] = new Array();
 
-        for(let i=1; i <= QUEEN_TRAVEL_DISTANCE; i++){
+        for(let i=1; i <= QUEEN_MAX_TRAVEL_DISTANCE; i++){
 
             const leftMoveSquare = new Square(qweenSquare.row , qweenSquare.col-i)
             const rightMoveSquare = new Square(qweenSquare.row , qweenSquare.col+i)
@@ -60,7 +63,7 @@ export default class Queen extends Piece {
         const verticalMoves = downwardMoves.concat(upwardMoves)
         const diagonalMoves = principalDiagonal.concat(secondaryDiagonal)
 
-        const availablePawnMoves = verticalMoves.concat(horisontalMoves).concat(diagonalMoves)       
-        return availablePawnMoves;
+        const availableMoves = verticalMoves.concat(horisontalMoves).concat(diagonalMoves)       
+        return availableMoves;
     }
 }

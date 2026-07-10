@@ -4,8 +4,8 @@ import Board from '../board';
 import Square from '../square';
 
 
-const BEFORE_MOVE_TRAVEL_DISTANCE = 2
-const AFTER_MOVE_TRAVEL_DISTANCE =1
+const FIRST_MOVE_TRAVEL_DISTANCE = 2
+const BASE_MOVE_TRAVEL_DISTANCE =1
 
 export default class Pawn extends Piece {
     private hasMoved;
@@ -16,11 +16,9 @@ export default class Pawn extends Piece {
     }
 
     public getAvailableMoves(board: Board) : Square[] {
-        const forwardMoves = new Array();
-        const diagonalMoves = new Array(); 
+        const forwardMoves : Square[] = new Array();
         
-        
-        const squareTravelDistance = !this.hasMoved ? BEFORE_MOVE_TRAVEL_DISTANCE : AFTER_MOVE_TRAVEL_DISTANCE   
+        const squareTravelDistance : number = !this.hasMoved ? FIRST_MOVE_TRAVEL_DISTANCE : BASE_MOVE_TRAVEL_DISTANCE   
 
         const pawnSquare : Square = board.findPiece(this)
         
@@ -33,10 +31,10 @@ export default class Pawn extends Piece {
             }
         }
 
-        const availablePawnMoves = forwardMoves.concat(diagonalMoves)        
-        return availablePawnMoves;
+        const availableMoves = forwardMoves;
+        return availableMoves;
     }
-    public moveTo(board: Board, newSquare: Square) {
+    public moveTo(board: Board, newSquare: Square) : void {
         this.hasMoved = true
         const currentSquare = board.findPiece(this);
         board.movePiece(currentSquare, newSquare);

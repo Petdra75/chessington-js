@@ -12,7 +12,7 @@ export default class Knight extends Piece {
 
     public getAvailableMoves(board: Board) {
         const knightSquare : Square = board.findPiece(this)
-        const availableMoves  = new Array(0)
+        const availableMoves : Square[]  = new Array()
 
         for(let i = 0 ; i < KNIGHT_MOVE_DIFFS.length; i++){
             const [diffRow,  diffCol] = KNIGHT_MOVE_DIFFS[i]
@@ -23,7 +23,7 @@ export default class Knight extends Piece {
                 availableMoves.push(availableMoveSquare)
             }
         }
-        ``
+        
         return availableMoves
     }
 

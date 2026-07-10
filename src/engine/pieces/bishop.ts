@@ -2,8 +2,9 @@ import Piece from './piece';
 import Player from '../player';
 import Board from '../board';
 import Square from '../square';
+import GameSettings from '../gameSettings';
 
-const BISHOP_TRAVEL_DISTANCE = 7
+const BISHOP_MAX_TRAVEL_DISTANCE = GameSettings.BOARD_SIZE -1 
 
 export default class Bishop extends Piece {
     public constructor(player: Player) {
@@ -16,12 +17,12 @@ export default class Bishop extends Piece {
         const principalDiagonal : Square[] = new Array();
         const secondaryDiagonal : Square[] = new Array();
 
-        for(let i=1; i <= BISHOP_TRAVEL_DISTANCE; i++){
+        for(let i=1; i <= BISHOP_MAX_TRAVEL_DISTANCE; i++){
 
-            const upLeftMoveSquare = new Square(rookSquare.row-i, rookSquare.col-i)
-            const upRightMoveSquare = new Square(rookSquare.row-i , rookSquare.col+i)
-            const downLeftMoveSuqare = new Square(rookSquare.row + i, rookSquare.col-i)
-            const downRightMoveSquare = new Square(rookSquare.row + i, rookSquare.col+i)
+            const upLeftMoveSquare : Square = new Square(rookSquare.row-i, rookSquare.col-i)
+            const upRightMoveSquare  : Square = new Square(rookSquare.row-i , rookSquare.col+i)
+            const downLeftMoveSuqare : Square = new Square(rookSquare.row + i, rookSquare.col-i)
+            const downRightMoveSquare : Square = new Square(rookSquare.row + i, rookSquare.col+i)
 
             if (board.checkSquareInBounds(upLeftMoveSquare)){
                 principalDiagonal.push(upLeftMoveSquare)
@@ -37,7 +38,7 @@ export default class Bishop extends Piece {
             }
         }
     
-        const availablePawnMoves = principalDiagonal.concat(secondaryDiagonal)       
-        return availablePawnMoves;
+        const availableMoves = principalDiagonal.concat(secondaryDiagonal)       
+        return availableMoves;
        }
 }
