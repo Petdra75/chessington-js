@@ -4,7 +4,7 @@ import Square from '../square';
 
 export default class Piece {
     public player: Player;
-
+    
     public constructor(player: Player) {
         this.player = player;
     }
