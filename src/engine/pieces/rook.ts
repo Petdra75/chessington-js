@@ -45,6 +45,7 @@ export default class Rook extends Piece {
 
         const availablePawnMoves = verticalMoves.concat(horisontalMoves)       
         return availablePawnMoves;
+
     }
     public moveTo(board: Board, newSquare: Square) {
         this.hasMoved = true
