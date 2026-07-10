@@ -16,7 +16,7 @@ export default class Board {
         this.board[square.row][square.col] = piece;
     }
 
-    public getPiece(square: Square) {
+    public getPiece(square: Square) : Piece | undefined {
         return this.board[square.row][square.col];
     }
 
@@ -25,7 +25,11 @@ export default class Board {
         const rowInBounds = square.row >= 0 && square.row < GameSettings.BOARD_SIZE;
         return columnInBounds && rowInBounds;   
     }
-        
+    
+    public checkIfSquareBlocked(square: Square) {
+        return !(this.getPiece(square) === undefined)
+    }
+    
     public findPiece(pieceToFind: Piece) {
         for (let row = 0; row < this.board.length; row++) {
             for (let col = 0; col < this.board[row].length; col++) {
