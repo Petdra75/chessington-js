@@ -8,24 +8,27 @@ export const enum Direction {
     DownLeft,
     DownRight,
 }
-
-export function getDirectionDiff(direction: Direction) : number[] {
-        switch (direction) {
+export type DirectionVector = {
+    row: number,
+    col: number
+}
+export function getDirectionDiff(direction: Direction) :DirectionVector{
+    switch (direction) {
             case Direction.Up:
-                return [-1, 0]
+                return {row:-1, col:0}
             case Direction.Left:
-                return [0, -1]
+                return {row:0, col:-1}
             case Direction.Down:
-                return [1, 0]
+                return {row:1, col:0}
             case Direction.Right:
-                return [0, 1]
+                return {row:0, col:1}
             case Direction.UpLeft:
-                return [-1, -1]
+                return {row:-1, col:-1}
             case Direction.UpRight:
-                return [-1, 1]
+                return {row:-1, col:1}
             case Direction.DownLeft:
-                return [1, -1]
+                return {row:1, col:-1}
             case Direction.DownRight:
-                return [1, 1]
+                return {row:1, col:1}
         }
     }

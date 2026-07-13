@@ -12,14 +12,29 @@ export default class Bishop extends Piece {
         super(player);
     }
 
-   public getAvailableMoves(board: Board) {   
-        const principalDiagonal : Square[] = this.getPossibleMoveInDirection(board, BISHOP_MAX_TRAVEL_DISTANCE, Direction.UpRight)
-                                                .concat(this.getPossibleMoveInDirection(board, BISHOP_MAX_TRAVEL_DISTANCE, Direction.DownLeft));
+   public getAvailableMoves(board : Board) {   
 
-        const secondaryDiagonal : Square[] = this.getPossibleMoveInDirection(board, BISHOP_MAX_TRAVEL_DISTANCE, Direction.UpLeft)
-                                                .concat(this.getPossibleMoveInDirection(board, BISHOP_MAX_TRAVEL_DISTANCE, Direction.DownRight))
+        const moveDirections = [Direction.UpLeft, Direction.DownRight, Direction.UpRight, Direction.DownLeft]
 
-        const availableMoves = principalDiagonal.concat(secondaryDiagonal)       
+        const availableQuietMoves : Square[] = new Array()
+        for (let i = 0 ; i< moveDirections.length; i++){
+            const directionBoundedMoves = this.getPossibleMoveInDirection(board, BISHOP_MAX_TRAVEL_DISTANCE, moveDirections[i])
+            availableQuietMoves.push(...directionBoundedMoves)
+        }
+        
+        const availableCaptureMoves = this.getCaptureMoves(board);
+        const availableMoves = availableQuietMoves.concat(availableCaptureMoves);
+        
         return availableMoves;
        }
+
+    public getCaptureMoves(board : Board) {
+        const moveDirections = [Direction.UpRight, Direction.DownRight, Direction.UpLeft, Direction.DownLeft]
+        const availableCaptureMoves : Square[] = new Array()
+        for (let i = 0 ; i< moveDirections.length; i++){
+            const directionBoundedMoves = this.getPossibleCaptureMoveInDirection(board, BISHOP_MAX_TRAVEL_DISTANCE, moveDirections[i])
+            availableCaptureMoves.push(...directionBoundedMoves)
+        }
+        return availableCaptureMoves;
+    }
 }

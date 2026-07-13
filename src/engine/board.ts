@@ -21,9 +21,9 @@ export default class Board {
     }
 
     public checkSquareInBounds(square: Square) {
-        const columnInBounds = square.col < GameSettings.BOARD_SIZE && square.col >= 0;
         const rowInBounds = square.row >= 0 && square.row < GameSettings.BOARD_SIZE;
-        return columnInBounds && rowInBounds;   
+        const columnInBounds = square.col >= 0 && square.col < GameSettings.BOARD_SIZE;
+        return rowInBounds && columnInBounds;   
     }
     
     public checkIfSquareBlocked(square: Square) {

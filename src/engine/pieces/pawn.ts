@@ -21,11 +21,23 @@ export default class Pawn extends Piece {
         
         const pawnDirection: Direction = this.player === Player.WHITE ? Direction.Down : Direction.Up;
 
-        const forwardMoves : Square[] = this.getPossibleMoveInDirection(board, squareTravelDistance, pawnDirection)
+        const availableQuietMoves : Square[] = this.getPossibleMoveInDirection(board, squareTravelDistance, pawnDirection)
+        const availableCaptureMoves : Square[] = this.getCaptureMoves(board)
+        return availableQuietMoves.concat(availableCaptureMoves);
         
-        const availableMoves = forwardMoves;
-        return availableMoves;
     }
+
+    public getCaptureMoves(board : Board ) : Square[] {
+        const isWhite : boolean = this.player === Player.WHITE
+        const leftTakeDirection: Direction = isWhite ? Direction.DownLeft : Direction.UpLeft;
+        const rightTakeDirection: Direction = isWhite ? Direction.DownRight : Direction.UpRight;
+        
+        const principalDiagonal : Square[] = this.getPossibleCaptureMoveInDirection(board, 1, leftTakeDirection);
+        const secondaryDiagonal : Square[] = this.getPossibleCaptureMoveInDirection(board, 1, rightTakeDirection);
+        
+        return  principalDiagonal.concat(secondaryDiagonal)
+    }
+
     public moveTo(board: Board, newSquare: Square) : void {
         this.hasMoved = true
         const currentSquare = board.findPiece(this);
